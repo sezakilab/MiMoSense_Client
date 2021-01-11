@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import QRCodeScan as qr
 
 # intializing the window
 window = tk.Tk()
@@ -7,7 +8,7 @@ window.title("SenScooter")
 # configuring size of the window
 window.geometry('400x600')
 # Forbid resize window
-window.resizable(width=False, height=False)
+window.resizable(0, 0)
 
 #Create Tab Control
 TAB_CONTROL = ttk.Notebook(window)
@@ -25,20 +26,47 @@ TAB4 = ttk.Frame(TAB_CONTROL)
 TAB_CONTROL.add(TAB4, text='ESM Panel')
 
 TAB_CONTROL.pack(expand=1, fill="both")
+
+
 #Tab1
 Task_info_labelframe = tk.LabelFrame(TAB1, text="Task's information")
 Task_info_labelframe.pack(fill="both", expand="yes")
 
-Task_info_scrollbar=tk.Scrollbar(Task_info_labelframe)
+#Treeview
+columns = ("task_name", "task_status")
+tree = ttk.Treeview(Task_info_labelframe, show="headings", columns=columns, selectmode=tk.BROWSE)
+
+# Setting column text in center.
+tree.column("task_name", anchor="center")
+tree.column("task_status", anchor="center")
+
+# Setting column text.
+tree.heading("task_name", text="Task")
+tree.heading("task_status", text="Status")
+
+lists = [{"task_name": "task1", "task_status": "running"}, {"task_name": "task2", "task_status": "stop"}]
+i = 0
+for v in lists:
+    tree.insert('', i, values=(v.get("task_name"), v.get("task_status")))
+    i += 1
+tree.pack(expand=True, fill=tk.BOTH)
+
+Task_info_scrollbar=tk.Scrollbar(tree)
 Task_info_scrollbar.pack(side=tk.RIGHT,fill=tk.BOTH)
+
+New_task_but = tk.Button(TAB1,text='New Task',command=qr.Scancode)
+New_task_but.pack(side=tk.RIGHT)
+
+Delete_task_but = tk.Button(TAB1,text='Delete Task')
+Delete_task_but.pack()
 
 Dev_info_labelframe = tk.LabelFrame(TAB1, text="Device's information")
 Dev_info_labelframe.pack(fill="both", expand="yes")
 
 #Dev_info_labelframe
 tk.Label(Dev_info_labelframe,text="Device ID").grid(row=1,column=0)
-tk.Label(Dev_info_labelframe,text="Device Name").grid(row=2,column=0)
-tk.Label(Dev_info_labelframe,text="Device Kind").grid(row=3,column=0)
+tk.Label(Dev_info_labelframe,text="Device Kind").grid(row=2,column=0)
+tk.Label(Dev_info_labelframe,text="Device IP").grid(row=3,column=0)
 
 Dev_ID_Entry=tk.Entry(Dev_info_labelframe)
 Dev_ID_Entry.grid(row=1,column=1)

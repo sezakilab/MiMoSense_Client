@@ -1,4 +1,12 @@
 import configparser
+import requests
+
+def get():
+    # Requests data from page
+    response = requests.get("https://api.ipify.org/?format=text")
+    ip = response.text
+
+    return ip
 
 cf = configparser.ConfigParser()
 
@@ -10,9 +18,10 @@ cf.set('Sqlite-Database','db','')
 cf.set('Sqlite-Database','charset','utf8')
 
 cf.add_section('Device')
-cf.set('Device','name','')
 cf.set('Device','id','')
 cf.set('Device','kind','scooter')
+cf.set('Device','ip',get())
 
 with open('config.ini', 'w') as fw:
-    cf.write(fw)
+    cf.write(fw)\
+
