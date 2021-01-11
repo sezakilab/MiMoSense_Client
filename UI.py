@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import QRCodeScan as qr
+import QRCode as qr
 
 # intializing the window
 window = tk.Tk()
