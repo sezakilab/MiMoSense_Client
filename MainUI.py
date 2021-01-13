@@ -80,21 +80,16 @@ class MainUI:
         # Dev_ID_Entry=tk.Entry(Dev_info_labelframe)
         # Dev_ID_Entry.grid(row=1,column=1)
 
-        '''
+        # Tab2
+        Sensors_labelframe = tk.LabelFrame(TAB2, text="Sensors")
+        Sensors_labelframe.pack(fill="both", expand="yes")
+
         #Req_sensors_labelframe
-        canvas = tk.Canvas(Req_sensors_labelframe, width=50,height=65)
+        canvas = tk.Canvas(Sensors_labelframe, width=50,height=65)
         gps_icon = tk.PhotoImage(file="pics\GPS2.png")
         image = canvas.create_image(0,0,anchor='nw',image=gps_icon)
         canvas.pack(side="left")
 
-        #Checkbox for every sensor.
-        gps = ttk.Checkbutton(Req_sensors_labelframe,text='GPS',takefocus=0).place(x=40,y=30)
-        '''
-
-        # Tab2
-
-        Sensors_labelframe = tk.LabelFrame(TAB2, text="Sensors")
-        Sensors_labelframe.pack(fill="both", expand="yes")
 
         Plugins_labelframe = tk.LabelFrame(TAB2, text="Plugins")
         Plugins_labelframe.pack(fill="both", expand="yes")

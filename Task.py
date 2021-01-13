@@ -1,9 +1,10 @@
+import tkinter.messagebox
 
 class Task():
 
     #Initlize the task information.
-    def __init__(self,task_name,serverIP,task_des,task_sensors,task_plugins,creator_id):
-
+    def __init__(self,id,task_name,serverIP,task_des,task_sensors,task_plugins,creator_id):
+        self.id=id
         self.task_name=task_name
         self.serverIP=serverIP
         self.task_des=task_des
@@ -23,3 +24,13 @@ class Task():
 
     def stop(self):
         print(self.task_name + " just stoped!")
+
+    def delete(self):
+
+        #Need to pop up the messagebox and ask user to confirm delete.
+        confirm_delete = tkinter.messagebox.askokcancel('Confirm Delete','Delete this task?')
+        if(confirm_delete):
+            #Edit the database and make the task disappear.
+            #Change the task_status to '2'.
+
+            print('Just deleted task'+self.task_name)
