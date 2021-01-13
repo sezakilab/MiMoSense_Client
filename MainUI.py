@@ -23,13 +23,11 @@ class MainUI:
         TAB_CONTROL.add(TAB1, text='Task Panel')
         # Tab2
         TAB2 = ttk.Frame(TAB_CONTROL)
-        TAB_CONTROL.add(TAB2, text='Control Panel')
+        TAB_CONTROL.add(TAB2, text='Real-time Panel')
+
         # Tab3
-        TAB3 = ttk.Frame(TAB_CONTROL)
-        TAB_CONTROL.add(TAB3, text='Real-time Panel')
-        # Tab4
-        TAB4 = ttk.Frame(TAB_CONTROL)
-        TAB_CONTROL.add(TAB4, text='ESM Panel')
+        #TAB3 = ttk.Frame(TAB_CONTROL)
+        #TAB_CONTROL.add(TAB3, text='ESM Panel')
 
         TAB_CONTROL.pack(expand=1, fill="both")
 
