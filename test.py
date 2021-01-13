@@ -18,4 +18,9 @@ def Confirm_task(task):
     return confirmed
 
 if __name__ == '__main__':
-    Task_dialog(True,2)
+    list=[]
+    task2='ij'
+    status2='stp'
+    list.append({"task_name": "task1", "task_status": "running"})
+    list.append({"task_name": task2, "task_status": status2})
+    print(list)

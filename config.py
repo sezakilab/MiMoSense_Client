@@ -1,4 +1,23 @@
 import configparser
+
+class global_var:
+
+    def __init__(self):
+        cf = configparser.ConfigParser()
+        cf.read("config.ini")
+
+        #secs = cf.sections()
+        #print(secs)
+        self.database = cf.get("Sqlite-Database", "db")
+        self.device_id = cf.get("Device", "id")
+        self.device_kind = cf.get("Device", "kind")
+        self.device_ip = cf.get("Device", "ip")
+
+    def get_database(self):
+        return self.database
+
+#当没有检测到config文件时，需要创建一个
+'''
 import requests
 
 def get():
@@ -25,3 +44,4 @@ cf.set('Device','ip',get())
 with open('config.ini', 'w') as fw:
     cf.write(fw)\
 
+'''

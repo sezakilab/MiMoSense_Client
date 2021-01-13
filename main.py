@@ -1,4 +1,4 @@
-import UI
+import MainUI
 
 
 if __name__ == '__main__':
