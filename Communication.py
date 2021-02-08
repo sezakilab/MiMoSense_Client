@@ -1,0 +1,107 @@
+import Database
+import os
+import Sensor
+import settings
+import paho.mqtt.publish as publish
+from multiprocessing import Process, Value, Array
+import json
+import time
+
+def start_sending(id):
+#	arg_tuple = ()
+    db = Database.db()
+    con,cur = db.connect()
+    cur.execute("select taskname from tasks where id=:id",{"id":id})
+    task_name=cur.fetchone()[0]
+    con.close()
+ 
+    p = Process(name=task_name,target=send_to_server, args=(id, settings.temperature, settings.humidity,
+                settings.gps,settings.co2,settings.air_pressure,
+                settings.motion,settings.audio,settings.uv,))
+    p.daemon = True
+    p.start()
+    settings.mqtt_process_list.append(p)
+'''
+	cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND task_senser.task_id=:id)",{"id":id})
+    sending_sensor_list = cur.fetchall()
+    for row in sending_sensor_list:
+		sensor_name = row[0]
+		if sensor_name == "temperature":
+			arg_tuple.append(settings.temperature)
+		else if sensor_name == "humidity":
+			arg_tuple.append(settings.humidity)
+'''	
+	
+
+
+def stop_sending(taskname):
+	print(taskname)
+	for p in settings.mqtt_process_list:
+		print(p.name)
+		if (p.name == taskname):
+			p.terminate()
+			settings.mqtt_process_list.remove(p)
+	
+
+
+
+def send_to_server(id, temp, humid, gps, co2, air, motion, audio, uv):
+    db = Database.db()
+    con,cur = db.connect()
+    cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND task_sensor.task_id=:id)",{"id":id})
+    sending_sensor_list = cur.fetchall()
+#    print(sending_sensor_list)
+    cur.execute("select * from tasks where id=:id",{"id":id})
+    task_info=cur.fetchall()[0]
+#    print(task_info)
+    con.close()
+    data = {
+        "task_name": task_info[1],
+        "task_id":task_info[0], 
+        "creator_id":task_info[5],
+        "temperature": None,
+        "humidity": None,
+	"co2": None,
+	"air_pressure": None,
+	"motion" : None,
+	"audio" : None,
+	"uv" : None,
+	"gps" : None
+    }
+    
+    topic = str(task_info[0])+"_"+task_info[1]
+    server_ip = task_info[3]
+#    server_ip = "5.196.95.208"
+    while True:
+        for row in sending_sensor_list:
+            print(row)
+            sensor_name = row[0]
+            if sensor_name == "temperature":
+                data.update({"temperature":temp.value})
+            elif sensor_name == "humidity":
+                data.update({"humidity":humid.value})
+            elif sensor_name == "gps":
+                data.update({"gps":gps.value})
+            elif sensor_name == "co2":
+                data.update({"co2":co2.value})
+            elif sensor_name == "air_pressure":
+                data.update({"air_pressure":air.value})
+            elif sensor_name == "motion":
+                data.update({"motion":motion.value})
+            elif sensor_name == "audio":
+                data.update({"audio":audio.value})
+            elif sensor_name == "uv":
+                data.update({"uv":uv.value})
+            
+        data_json = json.dumps(data)
+        print(data_json)
+        publish.single(topic, data_json, hostname=server_ip)
+        time.sleep(2)
+		
+	
+	
+	
+	
+	
+	
+	

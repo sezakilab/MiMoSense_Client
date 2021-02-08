@@ -1,4 +1,5 @@
 import configparser
+import requests
 
 class global_var:
 
@@ -11,7 +12,11 @@ class global_var:
         self.database = cf.get("Sqlite-Database", "db")
         self.device_id = cf.get("Device", "id")
         self.device_kind = cf.get("Device", "kind")
-        self.device_ip = cf.get("Device", "ip")
+        self.device_ip = self.get_public_IP()
+
+    def get_public_IP(self):
+        ip = requests.get('https://api.ipify.org').text
+        return ip
 
     def get_database(self):
         return self.database
