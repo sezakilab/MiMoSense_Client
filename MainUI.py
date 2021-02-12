@@ -61,6 +61,14 @@ class MainUI:
 
         Task_info_scrollbar = tk.Scrollbar(self.tree)
         Task_info_scrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
+        
+
+        # IoT device labelframe
+        Iot_info_labelframe = tk.LabelFrame(TAB1,text="IoT Device")
+        Iot_info_labelframe.pack(fill="both",expand="yes")
+
+        #Treeview2
+        columns = ("device_name","device_status")
 
         New_task_but = tk.Button(TAB1, text='New Task', command=lambda:[qr.test_func(),self.reset(main_window)])
         New_task_but.pack(side=tk.RIGHT)
@@ -68,7 +76,10 @@ class MainUI:
         New_task_but = tk.Button(TAB1, text='Refresh', command=lambda:[self.show_task_list()])
         New_task_but.pack(side=tk.RIGHT)
 
-        Dev_info_labelframe = tk.LabelFrame(TAB1, text="Device's information")
+        New_device_but =tk.Button(TAB1,text="New Device")
+        New_device_but.pack(side=tk.RIGHT)
+
+        Dev_info_labelframe = tk.LabelFrame(TAB1, text="This Device's information")
         Dev_info_labelframe.pack(fill="both", expand="yes")
 
         # Dev_info_labelframe
