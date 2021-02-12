@@ -68,7 +68,17 @@ class MainUI:
         Iot_info_labelframe.pack(fill="both",expand="yes")
 
         #Treeview2
-        columns = ("device_name","device_status")
+        columns2 = ("id","device_name","device_status")
+        self.tree = ttk.Treeview(Iot_info_labelframe,show="headings",columns=columns2,selectmode=tk.BROWSE)
+
+        self.tree.column("id", anchor="center")
+        self.tree.column("device_name", anchor="center")
+        self.tree.column("device_status", anchor="center")
+
+        # Setting column text.
+        self.tree.heading("id", text="Id")
+        self.tree.heading("device_name", text="Device")
+        self.tree.heading("device_status", text="Status")
 
         New_task_but = tk.Button(TAB1, text='New Task', command=lambda:[qr.test_func(),self.reset(main_window)])
         New_task_but.pack(side=tk.RIGHT)
@@ -216,7 +226,11 @@ class MainUI:
         TextLocation = tk.StringVar()
         self.get_text(main_window,TextLocation,"gps")
         tk.Label(Sensors_labelframe, textvariable=TextLocation ,justify='right').grid(sticky='E',row=14, column=40)
-    
+        
+        # Show all the IoT devie's real time in this part.
+        IoT_device_labelframe = tk.LabelFrame(TAB2,text="IoT Device")
+        IoT_device_labelframe.pack(fill="both",expand="yes")
+
         Plugins_labelframe = tk.LabelFrame(TAB2, text="Plugins")
         Plugins_labelframe.pack(fill="both", expand="yes")
 
