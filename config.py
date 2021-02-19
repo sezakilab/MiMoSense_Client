@@ -1,15 +1,29 @@
 import configparser
 import requests
 from multiprocessing import Value
+from pathlib import Path
 
 class global_var:
 
     def __init__(self):
-        cf = configparser.ConfigParser()
-        cf.read("config.ini")
 
-        #secs = cf.sections()
-        #print(secs)
+        cf = configparser.ConfigParser()
+        #Detect config file exist or not.
+        config_file=Path("config.ini")
+        try:
+            my_abs_path = config_file.resolve()
+        except FileNotFoundError:
+            #Create new config file.
+            cf.add_section('Sqlite-Database')
+            cf.set('Sqlite-Database','db','sensing-project.db')
+            cf.add_section('Device')
+            cf.set('Device','id','')
+            cf.set('Device','kind','scooter')
+            with open('config.ini', 'w') as fw:
+                cf.write(fw)
+            
+        #Read from config.ini.
+        cf.read("config.ini")
         self.database = cf.get("Sqlite-Database", "db")
         self.device_id = cf.get("Device", "id")
         self.device_kind = cf.get("Device", "kind")
@@ -18,9 +32,6 @@ class global_var:
     def get_public_IP(self):
         ip = requests.get('https://api.ipify.org').text
         return ip
-
-    def get_database(self):
-        return self.database
 
     def setup_global_paremeters(self):
         global temperature, humidity, co2, air_pressure, motion, audio, uv, gps
@@ -46,33 +57,3 @@ class global_var:
         gps_process = None
 
         mqtt_process_list = []
-
-#Need to setup a config file if didn't detect it.
-'''
-import requests
-
-def get():
-    # Requests data from page
-    response = requests.get("https://api.ipify.org/?format=text")
-    ip = response.text
-
-    return ip
-
-cf = configparser.ConfigParser()
-
-cf.add_section('Sqlite-Database')
-cf.set('Sqlite-Database','host','')
-cf.set('Sqlite-Database','user','')
-cf.set('Sqlite-Database','password','')
-cf.set('Sqlite-Database','db','')
-cf.set('Sqlite-Database','charset','utf8')
-
-cf.add_section('Device')
-cf.set('Device','id','')
-cf.set('Device','kind','scooter')
-cf.set('Device','ip',get())
-
-with open('config.ini', 'w') as fw:
-    cf.write(fw)\
-
-'''
