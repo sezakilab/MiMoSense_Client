@@ -1,7 +1,7 @@
 import Database
 import os
 import Sensor
-import settings
+import config
 import paho.mqtt.publish as publish
 from multiprocessing import Process, Value, Array
 import json
@@ -15,12 +15,12 @@ def start_sending(id):
     task_name=cur.fetchone()[0]
     con.close()
  
-    p = Process(name=task_name,target=send_to_server, args=(id, settings.temperature, settings.humidity,
-                settings.gps,settings.co2,settings.air_pressure,
-                settings.motion,settings.audio,settings.uv,))
+    p = Process(name=task_name,target=send_to_server, args=(id, config.temperature, config.humidity,
+                config.gps,config.co2,config.air_pressure,
+                config.motion,config.audio,config.uv,))
     p.daemon = True
     p.start()
-    settings.mqtt_process_list.append(p)
+    config.mqtt_process_list.append(p)
 '''
 	cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND task_senser.task_id=:id)",{"id":id})
     sending_sensor_list = cur.fetchall()
@@ -31,19 +31,14 @@ def start_sending(id):
 		else if sensor_name == "humidity":
 			arg_tuple.append(settings.humidity)
 '''	
-	
-
 
 def stop_sending(taskname):
 	print(taskname)
-	for p in settings.mqtt_process_list:
+	for p in config.mqtt_process_list:
 		print(p.name)
 		if (p.name == taskname):
 			p.terminate()
-			settings.mqtt_process_list.remove(p)
-	
-
-
+			config.mqtt_process_list.remove(p)
 
 def send_to_server(id, temp, humid, gps, co2, air, motion, audio, uv):
     db = Database.db()
@@ -61,12 +56,12 @@ def send_to_server(id, temp, humid, gps, co2, air, motion, audio, uv):
         "creator_id":task_info[5],
         "temperature": None,
         "humidity": None,
-	"co2": None,
-	"air_pressure": None,
-	"motion" : None,
-	"audio" : None,
-	"uv" : None,
-	"gps" : None
+	    "co2": None,
+	    "air_pressure": None,
+	    "motion" : None,
+	    "audio" : None,
+	    "uv" : None,
+	    "gps" : None
     }
     
     topic = str(task_info[0])+"_"+task_info[1]
@@ -97,11 +92,3 @@ def send_to_server(id, temp, humid, gps, co2, air, motion, audio, uv):
         print(data_json)
         publish.single(topic, data_json, hostname=server_ip)
         time.sleep(2)
-		
-	
-	
-	
-	
-	
-	
-	

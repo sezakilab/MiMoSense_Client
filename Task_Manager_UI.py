@@ -3,7 +3,6 @@ from tkinter import ttk
 import Database
 import os
 import Sensor
-import settings
 import Communication
 
 class Task_Manager_UI:
