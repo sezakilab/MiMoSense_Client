@@ -4,8 +4,6 @@ import random
 import threading
 import smbus
 
-
-
 # Get I2C bus
 def getdata(n):
 	while True:

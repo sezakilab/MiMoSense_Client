@@ -1,7 +1,7 @@
 #Used SparkFun 9DoF Sensor module in this project.
 #Need to install WiringPi first, then used following python code.
 #https://github.com/akimach/LSM9DS1_RaspberryPi_Library
-#Above code used C code also, need to be careful.
+#Above code also used C code, need to be careful.
 
 from ctypes import *
 

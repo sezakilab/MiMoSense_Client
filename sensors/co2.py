@@ -1,3 +1,4 @@
+#M5 stack SGP30 module used in this project.
 import time
 import board
 import busio

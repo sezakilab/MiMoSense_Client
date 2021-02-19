@@ -1,3 +1,4 @@
+#This program should be running in the IoT device, rather than client side.
 #import bluetooth
 import time
 

@@ -1,4 +1,5 @@
 #Used GPS6MV2 module in this project.
+
 import serial
 import pynmea2
 

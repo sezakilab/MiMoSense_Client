@@ -8,7 +8,7 @@ import os
 from PIL import ImageTk, Image
 import settings
 
-class MainUI:
+class UI:
 
     def __init__(self):
         
@@ -259,8 +259,6 @@ class MainUI:
         val.set(obj)
         root.after(1000,lambda:self.get_text(root,val,name))
 
-            
-
     def create_temp_file(self):
         THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
         self.acc_file = os.path.join(THIS_FOLDER, 'temp/acc.txt')
@@ -290,7 +288,3 @@ class MainUI:
     def reset(self,main_window):
         main_window.destroy()
         self.__init__()
-
-if __name__ == '__main__':
-    settings.init()
-    mainui = MainUI()
