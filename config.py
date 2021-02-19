@@ -22,7 +22,7 @@ class global_var:
     def get_database(self):
         return self.database
 
-    def setup_global_paremeters():
+    def setup_global_paremeters(self):
         global temperature, humidity, co2, air_pressure, motion, audio, uv, gps
         global temp_process, humidity_process, co2_process, air_pressure_process, motion_process, audio_process, uv_process, gps_process
         global mqtt_process_list

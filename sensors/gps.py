@@ -15,5 +15,4 @@ class gps:
         str = serialPort.readline()
         parseGPS(str)
 
-    def read_gps_data():
-        
+    #def read_gps_data():   

@@ -45,7 +45,6 @@ class Task_Manager_UI:
         con.close()
         return taskname
 
-
     def start_task(self):
         con,cur = self.db.connect()
     #    cur.execute("select * from tasks where id=:task_id", {"task_id": task_id})
