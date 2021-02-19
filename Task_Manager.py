@@ -20,7 +20,6 @@ class Task_Manager():
         #Otherwise it will deny the task.
         # New the task with the data we acquire from the QR code.
 
-
     def Detect_and_scan(self):
         # set up camera object
         cap = cv2.VideoCapture(0)
@@ -65,4 +64,3 @@ class Task_Manager():
         if('taskname' in data):
             form_validaity=True
         return form_validaity
-

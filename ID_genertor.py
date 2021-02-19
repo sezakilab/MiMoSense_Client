@@ -1,1 +1,0 @@
-#Generate the id for device, make it unique in server side.

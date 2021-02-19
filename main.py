@@ -6,4 +6,4 @@ if __name__ == '__main__':
     Config = config.global_var()
     Config.setup_global_paremeters()
     #Render the ui for software.
-    ui = UI()
+    ui = UI.UI()
