@@ -4,7 +4,8 @@ class bt_device:
     s = bluetooth.BluetoothSocket( bluetooth.RFCOMM ) 
     port = 1
 
-    def get_all_bluetooth_devices():
+    # Need to turn on the bluetooth first.
+    def get_all_bluetooth_devices(self):
         print("Performing inquiry...")
         nearby_devices = bluetooth.discover_devices(lookup_names = True)
         print("found %d devices" % len(nearby_devices))

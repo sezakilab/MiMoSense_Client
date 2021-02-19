@@ -18,12 +18,28 @@ class db:
         con.commit()
         con.close()
 
-    def insert_task(self,id,taskname,description,serverIP,sensors,plugins,creator_id,task_status,accept_time):
+    def insert_task_info(self,id,taskname,description,serverIP,sensors,plugins,creator_id,task_status,take_time):
         con, cur = self.connect()
-        cur.execute('insert into tasks values (?,?,?,?,?,?,?,?,?)',(id,taskname,description,serverIP,sensors,plugins,creator_id,task_status,accept_time))
+        cur.execute('insert into tasks values (?,?,?,?,?,?,?,?,?)',(id,taskname,description,serverIP,sensors,plugins,creator_id,task_status,take_time))
 
         con.commit()
         con.close()
+
+    # Insert sensed data into the database.
+    def insert_data(self,id,time_stamp,gps,motion,temperature,humidity,co2,air_pressure,helmet_motion):
+        con, cur = self.connect()
+        cur.execute('insert into Sensed_data values (?,?,?,?,?,?,?,?,?)',(id,time_stamp,gps,motion,temperature,humidity,co2,air_pressure,helmet_motion))
+
+        con.commit()
+        con.close()
+    
+    def insert_task_sensor(self,task_id,sensor_id):
+        con, cur = self.connect()
+        cur.execute('insert into task_sensor(task_id,sensor_id) values (?,?)',(task_id,sensor_id))
+
+        con.commit()
+        con.close()
+
     
     def get_alltasks_info(self):
         con, cur = self.connect()
@@ -44,6 +60,7 @@ class db:
         con.close()
         return task_info
 
+    
 
 if __name__ == '__main__':
     db = db()

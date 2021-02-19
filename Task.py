@@ -19,21 +19,19 @@ class Task():
         #Task's task time.
         self.take_time=created_at
 
+    # Write task information and sensors into database.
     def write_to_database(self):
 
         db = Database.db()
-        con,cur = db.connect()
-        cur.execute("insert into tasks values (?,?,?,?,?,?,?,?)",(self.id,self.task_name,self.task_des,self.serverIP,self.task_plugins,self.creator_id,self.task_status,self.take_time))
+        db.insert_task_info(self.id,self.task_name,self.task_des,self.serverIP,self.task_sensors,self.task_plugins,self.creator_id,self.task_status,self.take_time)
         count = 0
         # print("HELOO",type(self.task_sensors))
         for x in self.task_sensors:
                 count=count+1
                 if(self.task_sensors[x]==True):
-                    cur.execute("insert into task_sensor(task_id,sensor_id) values (?,?)",(self.id,count))
+                    db.insert_task_sensor(self.id,count)
 
-        con.commit()
-        con.close()
-        print("Wrote to database!")
+        print("Wrote task information to database!")
 
     def start(self):
 
