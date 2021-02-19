@@ -3,7 +3,6 @@ import sys,signal,atexit
 import time
 import os
 
-
 # Get I2C bus
 def getdata(n):
 	veml6070_sensor = veml6070.VEML6070(0)

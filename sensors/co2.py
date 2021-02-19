@@ -4,7 +4,6 @@ import board
 import busio
 import adafruit_sgp30
 
-
 # Get I2C bus
 def getdata(n):
 	i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)

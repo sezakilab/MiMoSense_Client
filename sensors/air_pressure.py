@@ -1,7 +1,6 @@
 import smbus
 import time
 
-
 def getdata(n):
 	# Get I2C bus
 	bus = smbus.SMBus(1)

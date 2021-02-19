@@ -13,7 +13,7 @@ class UI:
     def __init__(self):
         
         # intializing the window
-#        global main_window
+        # global main_window
         main_window = tk.Tk()
         main_window.title("SenScooter")
         # configuring size of the window
@@ -61,7 +61,6 @@ class UI:
 
         Task_info_scrollbar = tk.Scrollbar(self.tree)
         Task_info_scrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
-        
 
         # IoT device labelframe
         Iot_info_labelframe = tk.LabelFrame(TAB1,text="IoT Device")
@@ -108,8 +107,6 @@ class UI:
         # Tab2
         Sensors_labelframe = tk.LabelFrame(TAB2, text="Sensors")
         Sensors_labelframe.pack(fill="both", expand="yes")
-
-        
 
         #Req_sensors_labelframe
         '''
