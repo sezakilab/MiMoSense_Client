@@ -19,5 +19,3 @@ def getdata(n):
 	while True:
 		n.value = veml6070_sensor.getUVIntensity()
 		time.sleep(1)
-
-
