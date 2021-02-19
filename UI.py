@@ -175,7 +175,7 @@ class UI:
         self.barometer_file = os.path.join(THIS_FOLDER, 'temp/barometer.txt')
         self.battery_file = os.path.join(THIS_FOLDER, 'temp/battery.txt')
         self.communication_file = os.path.join(THIS_FOLDER, 'temp/communication.txt')
-     #   self.linear_acc_file = os.path.join(THIS_FOLDER, 'temp/acc.txt')
+        # self.linear_acc_file = os.path.join(THIS_FOLDER, 'temp/acc.txt')
         self.network_file = os.path.join(THIS_FOLDER, 'temp/network.txt')
         self.processor_file = os.path.join(THIS_FOLDER, 'temp/processor.txt')
         self.temperature_file = os.path.join(THIS_FOLDER, 'temp/temperature.txt')
