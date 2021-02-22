@@ -8,12 +8,9 @@ import json
 import time
 
 def start_sending(id):
-#	arg_tuple = ()
+
     db = Database.db()
-    con,cur = db.connect()
-    cur.execute("select taskname from tasks where id=:id",{"id":id})
-    task_name=cur.fetchone()[0]
-    con.close()
+    task_name = db.get_taskname_by_id(id)
  
     p = Process(name=task_name,target=send_to_server, args=(id, config.temperature, config.humidity,
                 config.gps,config.co2,config.air_pressure,
@@ -40,15 +37,17 @@ def stop_sending(taskname):
 			p.terminate()
 			config.mqtt_process_list.remove(p)
 
-def send_to_server(id, temp, humid, gps, co2, air, motion, audio, uv):
+# Sending sensed data to server side with frequency.
+def send_to_server(task_id, temp, humid, gps, co2, air, motion, audio, uv,frequency):
+
     db = Database.db()
     con,cur = db.connect()
-    cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND task_sensor.task_id=:id)",{"id":id})
+    cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND task_sensor.task_id=:id)",{"id":task_id})
     sending_sensor_list = cur.fetchall()
-#    print(sending_sensor_list)
-    cur.execute("select * from tasks where id=:id",{"id":id})
+    # print(sending_sensor_list)
+    cur.execute("select * from tasks where id=:id",{"id":task_id})
     task_info=cur.fetchall()[0]
-#    print(task_info)
+    # print(task_info)
     con.close()
     data = {
         "task_name": task_info[1],
@@ -66,7 +65,7 @@ def send_to_server(id, temp, humid, gps, co2, air, motion, audio, uv):
     
     topic = str(task_info[0])+"_"+task_info[1]
     server_ip = task_info[3]
-#    server_ip = "5.196.95.208"
+    # server_ip = "5.196.95.208"
     while True:
         for row in sending_sensor_list:
             print(row)
@@ -91,4 +90,5 @@ def send_to_server(id, temp, humid, gps, co2, air, motion, audio, uv):
         data_json = json.dumps(data)
         print(data_json)
         publish.single(topic, data_json, hostname=server_ip)
-        time.sleep(2)
+        # System upload stops according to upload frequency.
+        time.sleep(frequency)
