@@ -37,7 +37,7 @@ def stop_sending(taskname):
 			p.terminate()
 			config.mqtt_process_list.remove(p)
 
-# Sending sensed data to server side in setting's frequency.
+# Sending sensed data to server.
 def send_to_server(task_id, temp, humid, gps, co2, air, motion, audio, uv):
 
     db = Database.db()
@@ -90,7 +90,7 @@ def send_to_server(task_id, temp, humid, gps, co2, air, motion, audio, uv):
         data_json = json.dumps(data)
         print(data_json)
         publish.single(topic, data_json, hostname=server_ip)
-        # System upload stops according to upload frequency.
+        # System upload stops according to system's upload frequency. (second as unit).
         # Use this value temporary, this value should be stored in the database, task's table. 
         frequency = 1
         time.sleep(frequency)

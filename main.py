@@ -3,8 +3,7 @@ import config
 
 # Control system's sensed data upload or not.
 upload_or_not = False
-# System's upload frequency. (second as unit)
-upload_frequency = 1
+
 # Control system store data into database or not.
 stored_or_not = False
 
