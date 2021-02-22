@@ -80,6 +80,27 @@ class db:
         con.commit()
         con.close()
 
+    def get_task_status(self,task_id):
+        con,cur = self.connect()
+        cur.execute("select task_status from tasks where id=:task_id",{"task_id":task_id})
+        task_status = cur.fetchone()[0]
+        con.close()
+        return task_status
+
+    def delete_task(self,task_id):
+        con,cur = self.connect()
+        cur.execute("delete from tasks where id=:task_id",{"task_id":task_id})
+
+        con.commit()
+        con.close()
+    
+    def delete_task_sensor(self,task_id):
+        con,cur = self.connect()
+        cur.execute("delete from task_sensor where task_id=:task_id",{"task_id":task_id})
+
+        con.commit()
+        con.close()
+
 if __name__ == '__main__':
     db = db()
     #db.insert_task(2,'test-task2','task_descr2','789.123','0,0','1,1',1,0,'then')

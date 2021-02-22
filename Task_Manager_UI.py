@@ -40,6 +40,7 @@ class Task_Manager_UI:
         task_window.mainloop()
 
     def start_task(self):
+        
         con,cur = self.db.connect()
         
         self.db.update_task_status(self.task_id,1)
@@ -63,6 +64,7 @@ class Task_Manager_UI:
         con.close()
 
     def stop_task(self):
+
         Communication.stop_sending(self.taskname)        
         con,cur = self.db.connect()
         self.db.update_task_status(self.task_id,0)
@@ -83,20 +85,17 @@ class Task_Manager_UI:
         con.close()
 
     def delete_task(self):
-        con,cur = self.db.connect()
-        cur.execute("select task_status from tasks where id=:task_id",{"task_id":self.task_id})
-        status = cur.fetchone()[0]
+        
+        status = self.db.get_task_status(self.task_id)
         if (status == 1):
             tk.messagebox.showwarning(title="Warning", message="Task needs to be stopped before deleted")
         else:
-            cur.execute("delete from tasks where id=:task_id",{"task_id":self.task_id})
-            cur.execute("delete from task_sensor where task_id=:task_id",{"task_id":self.task_id})
-            con.commit()    
-            print('deleted task', self.task_id)
-        con.close()
+            self.db.delete_task(self.task_id)
+            self.db.delete_task_sensor(self.task_id)
+            print('Deleted task', self.task_id)
     
     def start_task_test(self):
-        print("started the task")
+        print("Started the task")
 
 if __name__ == '__main__':
     print('')
