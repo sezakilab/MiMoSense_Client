@@ -5,7 +5,7 @@ import Database
 class Task():
 
     #Initlize the task information.
-    def __init__(self,id=0,task_name="",serverIP="",task_des="",task_sensors=None,creator_id=0, created_at=""):
+    def __init__(self,id=0,task_name="",serverIP="",task_des="",task_sensors=None,creator_id=0, created_at="",upload_frequency=1):
 
         self.id=id
         self.task_name=task_name
@@ -18,12 +18,13 @@ class Task():
         self.task_status=False
         #Task's task time.
         self.take_time=created_at
+        self.upload_frequency = upload_frequency
 
     # Write task information and sensors into database.
     def write_to_database(self):
 
         db = Database.db()
-        db.insert_task_info(self.id,self.task_name,self.task_des,self.serverIP,self.task_sensors,self.task_plugins,self.creator_id,self.task_status,self.take_time)
+        db.insert_task_info(self.id,self.task_name,self.task_des,self.serverIP,self.task_sensors,self.task_plugins,self.creator_id,self.task_status,self.take_time,self.upload_frequency)
         count = 0
         # print("HELOO",type(self.task_sensors))
         for x in self.task_sensors:
