@@ -8,16 +8,15 @@ import Communication
 class Task_Manager_UI:
 
     def __init__(self,task_id):
+
         self.task_id = task_id
+        # Configuring the task window, forbid resize window.
         task_window = tk.Tk()
         task_window.title("Task Manage")
-        # configuring size of the window
         task_window.geometry('400x200')
-        # Forbid resize window
         task_window.resizable(0, 0)
-        #Display all the information of the task.
-        #First need to get information from the database.
 
+        #Display all the information of the task.
         tk.Label(task_window, text="Task Name").grid(row=1, column=0)
         tk.Label(task_window, text="Task Status").grid(row=2, column=0)
         tk.Label(task_window, text="Task Description").grid(row=3, column=0)
@@ -25,10 +24,12 @@ class Task_Manager_UI:
         tk.Label(task_window, text="Sensors").grid(row=5, column=0)
         tk.Label(task_window, text="Plugins").grid(row=6, column=0)
         tk.Label(task_window, text="Accept Time").grid(row=7, column=0)
-        
-        self.db = Database.db()
-        self.taskname= self.get_taskname_by_id()
 
+        # Get task's information from the database.
+        self.db = Database.db()
+        self.taskname= self.db.get_taskname_by_id(task_id)
+
+        # Set up the buttons for task.
         Start_task_but = tk.Button(task_window,text='Start Task',command=self.start_task)
         Stop_task_but = tk.Button(task_window, text='Stop Task',command=self.stop_task)
         Delete_task_but = tk.Button(task_window, text='Delete Task',command=self.delete_task)
@@ -38,19 +39,11 @@ class Task_Manager_UI:
 
         task_window.mainloop()
 
-    def get_taskname_by_id(self):
-        con,cur = self.db.connect()
-        cur.execute("select taskname from tasks where id=:id",{"id":self.task_id})
-        taskname = cur.fetchone()[0]
-        con.close()
-        return taskname
-
     def start_task(self):
         con,cur = self.db.connect()
-    #    cur.execute("select * from tasks where id=:task_id", {"task_id": task_id})
-        cur.execute("update tasks set task_status = 1 where id=:task_id",{"task_id":self.task_id})
-        cur.execute("update task_sensor set Status = 1 where task_id=:task_id",{"task_id":self.task_id})
-        con.commit()
+        
+        self.db.update_task_status(self.task_id,1)
+        self.db.update_sensor_status(self.task_id,1)
         
         cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1 AND Sensors.State=0)")
         new_sensor_list = cur.fetchall()
@@ -72,9 +65,8 @@ class Task_Manager_UI:
     def stop_task(self):
         Communication.stop_sending(self.taskname)        
         con,cur = self.db.connect()
-        cur.execute("update tasks set task_status = 0 where id=:task_id",{"task_id":self.task_id})
-        cur.execute("update task_sensor set Status = 0 where task_id=:task_id",{"task_id":self.task_id})
-        con.commit()
+        self.db.update_task_status(self.task_id,0)
+        self.db.update_sensor_status(self.task_id,0)
         
         cur.execute("select Name from Sensors where not exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1) AND State=1")
         new_sensor_list = cur.fetchall()

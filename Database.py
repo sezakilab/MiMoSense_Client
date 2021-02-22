@@ -40,7 +40,6 @@ class db:
         con.commit()
         con.close()
 
-    
     def get_alltasks_info(self):
         con, cur = self.connect()
         alltasks_info = cur.execute('SELECT id,taskname,task_status from tasks')
@@ -59,8 +58,27 @@ class db:
         con.commit()
         con.close()
         return task_info
-
     
+    def get_taskname_by_id(self,task_id):
+        con,cur = self.connect()
+        cur.execute("select taskname from tasks where id=:task_id",{"task_id":task_id})
+        taskname = cur.fetchone()[0]
+        con.close()
+        return taskname
+
+    def update_task_status(self,task_id,task_status):
+        con,cur = self.connect()
+        cur.execute("update tasks set task_status =:task_status where id=:task_id",{"task_status":task_status,"task_id":task_id})
+        
+        con.commit()
+        con.close()
+
+    def update_sensor_status(self,task_id,sensor_status):
+        con,cur = self.connect()
+        cur.execute("update task_sensor set Status =:sensor_status where task_id=:task_id",{"sensor_status":sensor_status,"task_id":task_id})
+        
+        con.commit()
+        con.close()
 
 if __name__ == '__main__':
     db = db()
