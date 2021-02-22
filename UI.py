@@ -144,7 +144,7 @@ class UI:
         image = image.resize((resize_parameter1, resize_parameter2), Image.ANTIALIAS)
         icon = ImageTk.PhotoImage(image)
         tk.Label(labelframe, image=icon).grid(sticky='W',row=row_number, column=1)
-        tk.Label(labelframe, text="Location").grid(row=row_number, column=0)
+        tk.Label(labelframe, text=sensor_kind).grid(row=row_number, column=0)
         Text = tk.StringVar()
         self.get_text(window,Text,sensor_kind)
         tk.Label(labelframe, textvariable=Text ,justify='right').grid(sticky='E',row=row_number, column=40)
