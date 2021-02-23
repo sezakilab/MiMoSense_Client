@@ -7,7 +7,6 @@ def getdata(n,frequency):
 	while True:
 		sensed_data=""
 		for i in range(1,frequency+1):
-
 			# BMP280 address, 0x76(118)
 			# Read data back from 0x88(136), 24 bytes
 			b1 = bus.read_i2c_block_data(0x76, 0x88, 24)

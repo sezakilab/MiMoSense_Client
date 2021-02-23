@@ -30,4 +30,4 @@ def getdata(n,frequency):
 			# Output data to screen
 		n.value = sensed_data 
 		time.sleep(1)
-	#print ("Temperature in Fahrenheit : %.2f F" %fTemp)
+		#print ("Temperature in Fahrenheit : %.2f F" %fTemp)
