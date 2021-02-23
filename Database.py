@@ -53,7 +53,7 @@ class db:
 
     def get_task_info(self,task_id):
         con, cur = self.connect()
-        task_info = cur.execute('SELECT taskname,description,serverIP,sensors,plugins,creator_id,task_status,accept_time from tasks where id ='+task_id)
+        task_info = cur.execute('SELECT * from tasks where id ='+task_id)
 
         con.commit()
         con.close()
@@ -72,6 +72,13 @@ class db:
         
         con.commit()
         con.close()
+
+    def get_sensor_list(self,task_id):
+        con,cur = self.connect()
+        cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND task_sensor.task_id=:id)",{"id":task_id})
+        sensor_list = cur.fetchall()
+
+        return sensor_list
 
     def update_sensor_status(self,task_id,sensor_status):
         con,cur = self.connect()

@@ -41,14 +41,9 @@ def stop_sending(taskname):
 def send_to_server(task_id, temp, humid, gps, co2, air, motion, audio, uv):
 
     db = Database.db()
-    con,cur = db.connect()
-    cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND task_sensor.task_id=:id)",{"id":task_id})
-    sending_sensor_list = cur.fetchall()
-    # print(sending_sensor_list)
-    cur.execute("select * from tasks where id=:id",{"id":task_id})
-    task_info=cur.fetchall()[0]
-    # print(task_info)
-    con.close()
+    sending_sensor_list = db.get_sensor_list(task_id)
+    task_info=db.get_task_info(task_id)
+
     data = {
         "task_name": task_info[1],
         "task_id":task_info[0], 
