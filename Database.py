@@ -33,9 +33,9 @@ class db:
         con.commit()
         con.close()
     
-    def insert_task_sensor(self,task_id,sensor_id):
+    def insert_task_sensor(self,task_id,sensor_id,sensor_frequency):
         con, cur = self.connect()
-        cur.execute('insert into task_sensor(task_id,sensor_id) values (?,?)',(task_id,sensor_id))
+        cur.execute('insert into task_sensor(task_id,sensor_id,frequency) values (?,?,?)',(task_id,sensor_id,sensor_frequency))
 
         con.commit()
         con.close()

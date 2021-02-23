@@ -5,9 +5,11 @@ import threading
 import smbus
 
 # Get I2C bus
-def getdata(n):
+# Get frequency's (number in one second) data reading, then store it into n value.
+def getdata(n,frequency):
 	time.sleep(0.5)
 	while True:
+		sensed_data=""
 	# threading.Timer(2.0, getdata,[n]).start()
 		bus = smbus.SMBus(1)
 	# SHT30 address, 0x44(68)

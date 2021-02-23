@@ -14,5 +14,5 @@ def print_gps_data():
     parseGPS(str)
 
 # Get data according to frequency (e.g., 10 times in one second.)
-def getdata(frequency):
+def getdata(n,frequency):
     print ""
