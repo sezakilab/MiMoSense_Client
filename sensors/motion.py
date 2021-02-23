@@ -111,5 +111,6 @@ def getdata(n,frequency):
             print("Gyro: %f, %f, %f [deg/s]" % (cgx, cgy, cgz))
             print("Accel: %f, %f, %f [Gs]" % (cax, cay, caz))
             print("Mag: %f, %f, %f [gauss]" % (cmx, cmy, cmz))
+            sensed_data =sensed_data+";"+str(cgx)+","+str(cgy)+","+str(cgz)+","+str(cax)+","+str(cay)+","+str(caz)+","+str(cmx)+","+str(cmy)+","+str(cmz)
         n.value =sensed_data
         time.sleep(1.0)
