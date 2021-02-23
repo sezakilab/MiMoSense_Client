@@ -46,14 +46,15 @@ class Task_Manager_UI:
         self.db.update_task_status(self.task_id,1)
         self.db.update_sensor_status(self.task_id,1)
         
-        cur.execute("select Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1 AND Sensors.State=0)")
+        cur.execute("select id Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1 AND Sensors.State=0)")
         new_sensor_list = cur.fetchall()
         print("New list is : ", new_sensor_list)
         for row in new_sensor_list:
             sensor_name = row[0]
             sensor=Sensor.Sensor(sensor_name)
             print(sensor_name)
-            sensor.start()
+            # Get sensor's frequency in task_sensor according to task_id and sensor_id.
+            sensor.start(frequency)
         cur.execute("update Sensors set State = 1 where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1);")
         #print(cur.fetchone())
         con.commit()
