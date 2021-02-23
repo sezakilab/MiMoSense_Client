@@ -27,14 +27,10 @@ class Task():
         db.insert_task_info(self.id,self.task_name,self.task_des,self.serverIP,self.task_sensors,self.task_plugins,self.creator_id,self.task_status,self.take_time,self.upload_frequency)
         count = 0
         # print("HELOO",type(self.task_sensors))
-        #------------------------------------
-        # Since changed json format, need to change json read function here.
         for x in self.task_sensors:
                 count=count+1
-                
-                if(self.task_sensors[x]==True):
-                    db.insert_task_sensor(self.id,count,sensor_frequency)
-        #------------------------------------
+                if(self.task_sensors[x]['switch']==True):
+                    db.insert_task_sensor(self.id,count,self.task_sensors[x]['frequency'])
         print("Wrote task information to database!")
 
     def start(self):

@@ -18,9 +18,9 @@ class db:
         con.commit()
         con.close()
 
-    def insert_task_info(self,id,taskname,description,serverIP,sensors,plugins,creator_id,task_status,take_time):
+    def insert_task_info(self,id,taskname,description,serverIP,sensors,plugins,creator_id,task_status,take_time,upload_frequency):
         con, cur = self.connect()
-        cur.execute('insert into tasks values (?,?,?,?,?,?,?,?,?)',(id,taskname,description,serverIP,sensors,plugins,creator_id,task_status,take_time))
+        cur.execute('insert into tasks values (?,?,?,?,?,?,?,?,?,?)',(id,taskname,description,serverIP,sensors,plugins,creator_id,task_status,take_time,upload_frequency))
 
         con.commit()
         con.close()

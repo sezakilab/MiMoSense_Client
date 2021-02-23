@@ -50,10 +50,12 @@ class Task_Manager_UI:
         new_sensor_list = cur.fetchall()
         print("New list is : ", new_sensor_list)
         for row in new_sensor_list:
-            sensor_name = row[0]
+            sensor_name = row[1]
             sensor=Sensor.Sensor(sensor_name)
             print(sensor_name)
-            # Get sensor's frequency in task_sensor according to task_id and sensor_id.
+            # Get sensor's frequency in task_sensor according to task_id and sensor_id (row[0]).
+            cur.execute("select frequency from task_sensor where task_id =:task_id AND sensor_id=:sensor_id",{"task_id":self.task_id,"sensor_id":row[0]})
+            frequency = cur.fetchone()
             sensor.start(frequency)
         cur.execute("update Sensors set State = 1 where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1);")
         #print(cur.fetchone())
