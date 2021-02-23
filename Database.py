@@ -26,9 +26,9 @@ class db:
         con.close()
 
     # Insert sensed data into the database.
-    def insert_data(self,id,time_stamp,gps,motion,temperature,humidity,co2,air_pressure,helmet_motion):
+    def insert_data(self,id,time_stamp,gps,motion,temperature,humidity,co2,air_pressure):
         con, cur = self.connect()
-        cur.execute('insert into Sensed_data values (?,?,?,?,?,?,?,?,?)',(id,time_stamp,gps,motion,temperature,humidity,co2,air_pressure,helmet_motion))
+        cur.execute('insert into Sensed_data values (?,?,?,?,?,?,?,?)',(id,time_stamp,gps,motion,temperature,humidity,co2,air_pressure))
 
         con.commit()
         con.close()
