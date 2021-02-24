@@ -53,8 +53,9 @@ class db:
 
     def get_task_info(self,task_id):
         con, cur = self.connect()
-        task_info = cur.execute('SELECT * from tasks where id ='+task_id)
-
+        cur.execute('SELECT * from tasks where id ='+task_id)
+        task_info = cur.fetchall()[0]
+        
         con.commit()
         con.close()
         return task_info

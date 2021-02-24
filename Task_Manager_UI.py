@@ -16,7 +16,7 @@ class Task_Manager_UI:
         task_window.geometry('400x200')
         task_window.resizable(0, 0)
 
-        #Display all the information of the task.
+        #Display all the information title of the task.
         tk.Label(task_window, text="Task Name").grid(row=1, column=0)
         tk.Label(task_window, text="Task Status").grid(row=2, column=0)
         tk.Label(task_window, text="Task Description").grid(row=3, column=0)
@@ -24,10 +24,21 @@ class Task_Manager_UI:
         tk.Label(task_window, text="Sensors").grid(row=5, column=0)
         tk.Label(task_window, text="Plugins").grid(row=6, column=0)
         tk.Label(task_window, text="Accept Time").grid(row=7, column=0)
+        tk.Label(task_window, text="Upload Frequency").grid(row=8,column=0)
 
         # Get task's information from the database.
         self.db = Database.db()
+        task_info = self.db.get_task_info(task_id)
         self.taskname= self.db.get_taskname_by_id(task_id)
+
+        # Display all the information of the task.
+        tk.Label(task_window,text=self.taskname).grid(row=1,column=1)
+        # Task status
+        tk.Label(task_window,text=task_info[7]).grid(row=2,column=1)
+        # Server IP
+        tk.Label(task_window,text=task_info[3]).grid(row=4,column=1)
+        # Upload frequency
+        tk.Label(task_window,text=task_info[9]).grid(row=8,column=1)
 
         # Set up the buttons for task.
         Start_task_but = tk.Button(task_window,text='Start Task',command=self.start_task)
