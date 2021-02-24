@@ -62,7 +62,7 @@ class Task_Manager_UI:
         self.db.update_task_status(self.task_id,1)
         self.db.update_sensor_status(self.task_id,1)
         
-        cur.execute("select id Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1 AND Sensors.State=0)")
+        cur.execute("select id, Name from Sensors where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1 AND Sensors.State=0)")
         new_sensor_list = cur.fetchall()
         print("New list is : ", new_sensor_list)
         for row in new_sensor_list:
