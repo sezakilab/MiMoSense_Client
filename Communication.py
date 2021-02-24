@@ -84,6 +84,7 @@ def send_to_server(task_id, temp, humid, gps, co2, air, motion, audio, uv):
             
         data_json = json.dumps(data)
         print(data_json)
+        # Comment this to stop uploading.
         publish.single(topic, data_json, hostname=server_ip)
 
         # Store the sensed data into the local database.

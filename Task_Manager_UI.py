@@ -55,7 +55,7 @@ class Task_Manager_UI:
             print(sensor_name)
             # Get sensor's frequency in task_sensor according to task_id and sensor_id (row[0]).
             cur.execute("select frequency from task_sensor where task_id =:task_id AND sensor_id=:sensor_id",{"task_id":self.task_id,"sensor_id":row[0]})
-            frequency = cur.fetchone()m
+            frequency = cur.fetchone()
             sensor.start(frequency)
         cur.execute("update Sensors set State = 1 where exists (select sensor_id from task_sensor where task_sensor.sensor_id=Sensors.id AND Status=1);")
         #print(cur.fetchone())
