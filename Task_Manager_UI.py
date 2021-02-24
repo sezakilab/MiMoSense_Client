@@ -30,6 +30,8 @@ class Task_Manager_UI:
         self.db = Database.db()
         task_info = self.db.get_task_info(task_id)
         self.taskname= self.db.get_taskname_by_id(task_id)
+        sensors_list = self.db.get_sensor_list(task_id)
+        print(sensors_list)
 
         # Display all the information of the task.
         tk.Label(task_window,text=self.taskname).grid(row=1,column=1)
@@ -37,6 +39,9 @@ class Task_Manager_UI:
         tk.Label(task_window,text=task_info[7]).grid(row=2,column=1)
         # Server IP
         tk.Label(task_window,text=task_info[3]).grid(row=4,column=1)
+        # Sensors
+        tk.Label(task_window,text=sensors_list).grid(row=5,column=1)
+
         # Upload frequency
         tk.Label(task_window,text=task_info[9]).grid(row=8,column=1)
 
