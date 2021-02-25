@@ -25,43 +25,43 @@ class Sensor():
         # return success_or_not
         if self.name == "temperature":
             # print("Here temp \n")
-            config.temp_process = Process(target=temp.getdata, args=(config.temperature,frequency,))
+            config.temp_process = Process(target=temp.getdata, args=(config.temperature,frequency))
             config.temp_process.daemon = True
             config.temp_process.start()
  #           self.process.join()
             print(config.temperature.value)
         elif self.name == "humidity":
-            config.humidity_process = Process(target=humidity.getdata, args=(config.humidity,frequency,))
+            config.humidity_process = Process(target=humidity.getdata, args=(config.humidity,frequency))
             config.humidity.daemon = True
             config.humidity_process.start()
 
         elif self.name == "gps":
-            config.gps_process = Process(target=gps.getdata, args=(config.gps,frequency,))
+            config.gps_process = Process(target=gps.getdata, args=(config.gps,frequency))
             config.gps_process.daemon = True
             config.gps_process.start()
 
         elif self.name == "air_pressure":
-            config.air_pressure_process = Process(target=air_pressure.getdata, args=(config.air_pressure,frequency,))
+            config.air_pressure_process = Process(target=air_pressure.getdata, args=(config.air_pressure,frequency))
             config.air_pressure_process.daemon = True
             config.air_pressure_process.start()
 
         elif self.name == "co2":
-            config.co2_process = Process(target=co2.getdata, args=(config.co2,frequency,))
+            config.co2_process = Process(target=co2.getdata, args=(config.co2,frequency))
             config.co2_process.daemon = True
             config.co2_process.start()
 
         elif self.name == "motion":
-            config.motion_process = Process(target=motion.getdata, args=(config.motion,frequency,))
+            config.motion_process = Process(target=motion.getdata, args=(config.motion,frequency))
             config.motion_process.daemon = True
             config.motion_process.start()    
 
         elif self.name == "uv":
-            config.uv_process = Process(target=uv.getdata, args=(config.uv,frequency,))
+            config.uv_process = Process(target=uv.getdata, args=(config.uv,frequency))
             config.uv_process.daemon = True
             config.uv_process.start()
         
         elif self.name == "audio":
-            config.audio_process = Process(target=audio.getdata, args=(config.audio,frequency,))
+            config.audio_process = Process(target=audio.getdata, args=(config.audio,frequency))
             config.audio_process.daemon = True
             config.audio_process.start()
  
