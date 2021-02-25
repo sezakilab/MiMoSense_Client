@@ -47,7 +47,7 @@ def send_to_server(task_id, temp, humid, gps, co2, air, motion, audio, uv):
     data = {
         "task_name": task_info[1],
         "task_id":task_info[0], 
-        "creator_id":task_info[5],
+        "creator_id":task_info[6],
         "temperature": None,
         "humidity": None,
 	    "co2": None,
@@ -89,7 +89,8 @@ def send_to_server(task_id, temp, humid, gps, co2, air, motion, audio, uv):
 
         # Store the sensed data into the local database.
         sensed_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-        db.insert_data(1,sensed_time,gps.value,motion.value,temp.value,humid.value,co2.value,air.value)
+        # Since id is auto increase, so we can simply write 0.
+        db.insert_data(0,sensed_time,gps.value,motion.value,temp.value,humid.value,co2.value,air.value,0)
         # System upload stops according to system's upload frequency. (second as unit).
         # Use this value temporary, this value should be stored in the database, task's table. 
         frequency = 1
